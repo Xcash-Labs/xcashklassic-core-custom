@@ -57,6 +57,32 @@ static void generate_system_random_bytes(size_t n, void *result) {
 #undef must_succeed
 }
 
+#elif defined(__EMSCRIPTEN__)
+
+#include <emscripten.h>
+
+EM_JS(void, wasm_random_bytes, (unsigned char *buf, size_t len), {
+  var out = HEAPU8.subarray(buf, buf + len);
+
+  if (typeof globalThis !== 'undefined' &&
+      globalThis.crypto &&
+      globalThis.crypto.getRandomValues) {
+    globalThis.crypto.getRandomValues(out);
+    return;
+  }
+
+  if (typeof require === 'function') {
+    require('crypto').randomFillSync(out);
+    return;
+  }
+
+  throw 'No secure random source available';
+});
+
+static void generate_system_random_bytes(size_t n, void *result) {
+  wasm_random_bytes((unsigned char *)result, n);
+}
+
 #else
 
 #include <err.h>
