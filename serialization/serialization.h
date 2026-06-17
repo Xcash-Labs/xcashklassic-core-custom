@@ -104,10 +104,7 @@ struct serializer{
     ar.serialize_int(v);
     return true;
   }
-  static bool serialize(Archive &ar, T &v, boost::false_type, boost::false_type, boost::false_type) {
-    //serialize_custom(ar, v, typename has_free_serializer<T>::type());
-    return v.do_serialize(ar);
-  }
+
   static bool serialize(Archive &ar, T &v, boost::false_type, boost::false_type, boost::false_type) {
     return v.member_do_serialize(ar);
   }
