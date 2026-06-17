@@ -166,6 +166,12 @@ namespace cryptonote
       }
       return true;
     }
+
+    template <bool W, template <bool> class Archive>
+    bool do_serialize(Archive<W>& ar)
+    {
+      return member_do_serialize(ar);
+    }
   };
 
   struct tx_extra_pub_key
@@ -230,6 +236,12 @@ namespace cryptonote
 
       std::string field = oss.str();
       return ::serialization::serialize(ar, field);
+    }
+
+    template <bool W, template <bool> class Archive>
+    bool do_serialize(Archive<W>& ar)
+    {
+      return member_do_serialize(ar);
     }
   };
 
