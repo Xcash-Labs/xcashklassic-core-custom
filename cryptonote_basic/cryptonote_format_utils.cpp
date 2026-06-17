@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2022, The Monero Project
+// Copyright (c) 2018-2025 XCASH Project, Derived from The Monero Project
 // 
 // All rights reserved.
 // 
@@ -48,29 +48,6 @@ using namespace epee;
 // #define ENABLE_HASH_CASH_INTEGRITY_CHECK
 
 using namespace crypto;
-
-static const uint64_t valid_decomposed_outputs[] = {
-  (uint64_t)1, (uint64_t)2, (uint64_t)3, (uint64_t)4, (uint64_t)5, (uint64_t)6, (uint64_t)7, (uint64_t)8, (uint64_t)9, // 1 piconero
-  (uint64_t)10, (uint64_t)20, (uint64_t)30, (uint64_t)40, (uint64_t)50, (uint64_t)60, (uint64_t)70, (uint64_t)80, (uint64_t)90,
-  (uint64_t)100, (uint64_t)200, (uint64_t)300, (uint64_t)400, (uint64_t)500, (uint64_t)600, (uint64_t)700, (uint64_t)800, (uint64_t)900,
-  (uint64_t)1000, (uint64_t)2000, (uint64_t)3000, (uint64_t)4000, (uint64_t)5000, (uint64_t)6000, (uint64_t)7000, (uint64_t)8000, (uint64_t)9000,
-  (uint64_t)10000, (uint64_t)20000, (uint64_t)30000, (uint64_t)40000, (uint64_t)50000, (uint64_t)60000, (uint64_t)70000, (uint64_t)80000, (uint64_t)90000,
-  (uint64_t)100000, (uint64_t)200000, (uint64_t)300000, (uint64_t)400000, (uint64_t)500000, (uint64_t)600000, (uint64_t)700000, (uint64_t)800000, (uint64_t)900000,
-  (uint64_t)1000000, (uint64_t)2000000, (uint64_t)3000000, (uint64_t)4000000, (uint64_t)5000000, (uint64_t)6000000, (uint64_t)7000000, (uint64_t)8000000, (uint64_t)9000000, // 1 micronero
-  (uint64_t)10000000, (uint64_t)20000000, (uint64_t)30000000, (uint64_t)40000000, (uint64_t)50000000, (uint64_t)60000000, (uint64_t)70000000, (uint64_t)80000000, (uint64_t)90000000,
-  (uint64_t)100000000, (uint64_t)200000000, (uint64_t)300000000, (uint64_t)400000000, (uint64_t)500000000, (uint64_t)600000000, (uint64_t)700000000, (uint64_t)800000000, (uint64_t)900000000,
-  (uint64_t)1000000000, (uint64_t)2000000000, (uint64_t)3000000000, (uint64_t)4000000000, (uint64_t)5000000000, (uint64_t)6000000000, (uint64_t)7000000000, (uint64_t)8000000000, (uint64_t)9000000000,
-  (uint64_t)10000000000, (uint64_t)20000000000, (uint64_t)30000000000, (uint64_t)40000000000, (uint64_t)50000000000, (uint64_t)60000000000, (uint64_t)70000000000, (uint64_t)80000000000, (uint64_t)90000000000,
-  (uint64_t)100000000000, (uint64_t)200000000000, (uint64_t)300000000000, (uint64_t)400000000000, (uint64_t)500000000000, (uint64_t)600000000000, (uint64_t)700000000000, (uint64_t)800000000000, (uint64_t)900000000000,
-  (uint64_t)1000000000000, (uint64_t)2000000000000, (uint64_t)3000000000000, (uint64_t)4000000000000, (uint64_t)5000000000000, (uint64_t)6000000000000, (uint64_t)7000000000000, (uint64_t)8000000000000, (uint64_t)9000000000000, // 1 monero
-  (uint64_t)10000000000000, (uint64_t)20000000000000, (uint64_t)30000000000000, (uint64_t)40000000000000, (uint64_t)50000000000000, (uint64_t)60000000000000, (uint64_t)70000000000000, (uint64_t)80000000000000, (uint64_t)90000000000000,
-  (uint64_t)100000000000000, (uint64_t)200000000000000, (uint64_t)300000000000000, (uint64_t)400000000000000, (uint64_t)500000000000000, (uint64_t)600000000000000, (uint64_t)700000000000000, (uint64_t)800000000000000, (uint64_t)900000000000000,
-  (uint64_t)1000000000000000, (uint64_t)2000000000000000, (uint64_t)3000000000000000, (uint64_t)4000000000000000, (uint64_t)5000000000000000, (uint64_t)6000000000000000, (uint64_t)7000000000000000, (uint64_t)8000000000000000, (uint64_t)9000000000000000,
-  (uint64_t)10000000000000000, (uint64_t)20000000000000000, (uint64_t)30000000000000000, (uint64_t)40000000000000000, (uint64_t)50000000000000000, (uint64_t)60000000000000000, (uint64_t)70000000000000000, (uint64_t)80000000000000000, (uint64_t)90000000000000000,
-  (uint64_t)100000000000000000, (uint64_t)200000000000000000, (uint64_t)300000000000000000, (uint64_t)400000000000000000, (uint64_t)500000000000000000, (uint64_t)600000000000000000, (uint64_t)700000000000000000, (uint64_t)800000000000000000, (uint64_t)900000000000000000,
-  (uint64_t)1000000000000000000, (uint64_t)2000000000000000000, (uint64_t)3000000000000000000, (uint64_t)4000000000000000000, (uint64_t)5000000000000000000, (uint64_t)6000000000000000000, (uint64_t)7000000000000000000, (uint64_t)8000000000000000000, (uint64_t)9000000000000000000, // 1 meganero
-  (uint64_t)10000000000000000000ull
-};
 
 static std::atomic<unsigned int> default_decimal_point(CRYPTONOTE_DISPLAY_DECIMAL_POINT);
 
@@ -257,6 +234,7 @@ namespace cryptonote
     CHECK_AND_ASSERT_MES(r, false, "Failed to parse transaction from blob");
     CHECK_AND_ASSERT_MES(expand_transaction_1(tx, false), false, "Failed to expand transaction data");
     tx.invalidate_hashes();
+    tx.set_blob_size(tx_blob.size());
     //TODO: validate tx
 
     return get_transaction_hash(tx, tx_hash);
@@ -292,7 +270,7 @@ namespace cryptonote
     bool r = hwdev.generate_key_derivation(tx_public_key, ack.m_view_secret_key, recv_derivation);
     if (!r)
     {
-      MWARNING("key image helper: failed to generate_key_derivation(" << tx_public_key << ", " << ack.m_view_secret_key << ")");
+      MWARNING("key image helper: failed to generate_key_derivation(" << tx_public_key << ", <viewkey>)");
       memcpy(&recv_derivation, rct::identity().bytes, sizeof(recv_derivation));
     }
 
@@ -303,7 +281,7 @@ namespace cryptonote
       r = hwdev.generate_key_derivation(additional_tx_public_keys[i], ack.m_view_secret_key, additional_recv_derivation);
       if (!r)
       {
-        MWARNING("key image helper: failed to generate_key_derivation(" << additional_tx_public_keys[i] << ", " << ack.m_view_secret_key << ")");
+        MWARNING("key image helper: failed to generate_key_derivation(" << additional_tx_public_keys[i] << ", <viewkey>)");
       }
       else
       {
@@ -520,6 +498,19 @@ namespace cryptonote
     return get_transaction_weight(tx, blob_size);
   }
   //---------------------------------------------------------------
+  uint64_t get_transaction_blob_size(const transaction& tx)
+  {
+    if (!tx.is_blob_size_valid())
+    {
+      const cryptonote::blobdata tx_blob = tx_to_blob(tx);
+      tx.set_blob_size(tx_blob.size());
+    }
+
+    CHECK_AND_ASSERT_THROW_MES(tx.is_blob_size_valid(), "BUG: blob size valid not set");
+
+    return tx.blob_size;
+  }
+  //---------------------------------------------------------------
   bool get_tx_fee(const transaction& tx, uint64_t & fee)
   {
     if (tx.version > 1)
@@ -570,6 +561,66 @@ namespace cryptonote
 
     return true;
   }
+
+
+
+// jed
+bool parse_tx_extra__DEBUG__(const std::vector<uint8_t>& tx_extra, std::vector<tx_extra_field>& tx_extra_fields)
+{
+  tx_extra_fields.clear();
+
+  if (tx_extra.empty()) {
+    fprintf(stderr, "[DEBUG] parse_tx_extra: tx_extra is empty.\n");
+    return true;
+  }
+
+  fprintf(stderr, "[DEBUG] parse_tx_extra: tx_extra size = %zu bytes\n", tx_extra.size());
+  fprintf(stderr, "[DEBUG] Hex dump of tx_extra:\n");
+  for (size_t i = 0; i < tx_extra.size(); ++i) {
+    fprintf(stderr, "%02x ", tx_extra[i]);
+    if ((i + 1) % 16 == 0) fprintf(stderr, "\n");
+  }
+  if (tx_extra.size() % 16 != 0) fprintf(stderr, "\n");
+
+  binary_archive<false> ar{epee::to_span(tx_extra)};
+  size_t field_index = 0;
+
+  do {
+    tx_extra_field field;
+
+    fprintf(stderr, "[DEBUG] Attempting to deserialize field #%zu...\n", field_index);
+    bool r = ::do_serialize(ar, field);
+    if (!r) {
+      fprintf(stderr, "[ERROR] Failed to deserialize field #%zu\n", field_index);
+      fprintf(stderr, "[ERROR] tx_extra hex: %s\n",
+              string_tools::buff_to_hex_nodelimer(
+                std::string(reinterpret_cast<const char*>(tx_extra.data()), tx_extra.size())).c_str());
+      return false;
+    }
+
+    tx_extra_fields.push_back(field);
+    fprintf(stderr, "[DEBUG] Field #%zu deserialized successfully\n", field_index);
+    ++field_index;
+  } while (!ar.eof());
+
+  if (!::serialization::check_stream_state(ar)) {
+    fprintf(stderr, "[ERROR] parse_tx_extra: stream state check failed\n");
+    fprintf(stderr, "[ERROR] tx_extra hex: %s\n",
+            string_tools::buff_to_hex_nodelimer(
+              std::string(reinterpret_cast<const char*>(tx_extra.data()), tx_extra.size())).c_str());
+    return false;
+  }
+
+  fprintf(stderr, "[DEBUG] parse_tx_extra: Successfully parsed %zu fields\n", tx_extra_fields.size());
+  return true;
+}
+
+
+
+
+
+
+
   //---------------------------------------------------------------
   template<typename T>
   static bool pick(binary_archive<true> &ar, std::vector<tx_extra_field> &fields, uint8_t tag)
@@ -629,8 +680,8 @@ namespace cryptonote
     if (!pick<tx_extra_additional_pub_keys>(nar, tx_extra_fields, TX_EXTRA_TAG_ADDITIONAL_PUBKEYS)) return false;
     if (!pick<tx_extra_nonce>(nar, tx_extra_fields, TX_EXTRA_NONCE)) return false;
     if (!pick<tx_extra_merge_mining_tag>(nar, tx_extra_fields, TX_EXTRA_MERGE_MINING_TAG)) return false;
-    if (!pick<tx_extra_mysterious_minergate>(nar, tx_extra_fields, TX_EXTRA_MYSTERIOUS_MINERGATE_TAG)) return false;
-    if (!pick<tx_extra_padding>(nar, tx_extra_fields, TX_EXTRA_TAG_PADDING)) return false;
+    if (!pick<tx_extra_vrf_signature>(nar, tx_extra_fields, TX_EXTRA_VRF_SIGNATURE_TAG)) return false;
+    if (!pick<tx_extra_vrf_signature>(nar, tx_extra_fields, TX_EXTRA_TAG_PUBLIC_TX_V1)) return false;
 
     // if not empty, someone added a new type and did not add a case above
     if (!tx_extra_fields.empty())
@@ -723,38 +774,36 @@ namespace cryptonote
     return true;
   }
   //---------------------------------------------------------------
-  bool add_extra_nonce_to_tx_extra(std::vector<uint8_t>& tx_extra, const blobdata& extra_nonce)
-  {
+  bool add_extra_nonce_to_tx_extra(std::vector<uint8_t>& tx_extra, const blobdata& extra_nonce) {
     CHECK_AND_ASSERT_MES(extra_nonce.size() <= TX_EXTRA_NONCE_MAX_COUNT, false, "extra nonce could be 255 bytes max");
-    size_t start_pos = tx_extra.size();
-    tx_extra.resize(tx_extra.size() + 2 + extra_nonce.size());
-    //write tag
-    tx_extra[start_pos] = TX_EXTRA_NONCE;
-    //write len
-    ++start_pos;
-    tx_extra[start_pos] = static_cast<uint8_t>(extra_nonce.size());
-    //write data
-    ++start_pos;
-    memcpy(&tx_extra[start_pos], extra_nonce.data(), extra_nonce.size());
+    tx_extra.push_back(TX_EXTRA_NONCE);                                       // tag
+    tools::write_varint(std::back_inserter(tx_extra), extra_nonce.size());    // length as varint
+    tx_extra.insert(tx_extra.end(), extra_nonce.begin(), extra_nonce.end());  // data
     return true;
   }
   //---------------------------------------------------------------
-  bool add_mm_merkle_root_to_tx_extra(std::vector<uint8_t>& tx_extra, const crypto::hash& mm_merkle_root, size_t mm_merkle_tree_depth)
+  bool add_mm_merkle_root_to_tx_extra(std::vector<uint8_t>& tx_extra, const crypto::hash& mm_merkle_root, uint64_t mm_merkle_tree_depth)
   {
-    CHECK_AND_ASSERT_MES(mm_merkle_tree_depth < 32, false, "merge mining merkle tree depth should be less than 32");
     size_t start_pos = tx_extra.size();
-    tx_extra.resize(tx_extra.size() + 3 + 32);
+    static const size_t max_varint_size = 16;
+    tx_extra.resize(tx_extra.size() + 2 + 32 + max_varint_size);
     //write tag
     tx_extra[start_pos] = TX_EXTRA_MERGE_MINING_TAG;
     //write data size
     ++start_pos;
-    tx_extra[start_pos] = 33;
-    //write depth varint (always one byte here)
+    const off_t len_bytes = start_pos;
+    // one byte placeholder for length since we'll only know the size later after writing a varint
+    tx_extra[start_pos] = 0;
+    //write depth varint
     ++start_pos;
-    tx_extra[start_pos] = mm_merkle_tree_depth;
+    uint8_t *ptr = &tx_extra[start_pos], *start = ptr;
+    tools::write_varint(ptr, mm_merkle_tree_depth);
     //write data
-    ++start_pos;
+    const size_t varint_size = ptr - start;
+    start_pos += varint_size;
     memcpy(&tx_extra[start_pos], &mm_merkle_root, 32);
+    tx_extra.resize(tx_extra.size() - (max_varint_size - varint_size));
+    tx_extra[len_bytes] = 32 + varint_size;
     return true;
   }
   //---------------------------------------------------------------
@@ -989,7 +1038,7 @@ namespace cryptonote
     return true;
   }
   //---------------------------------------------------------------
-  bool out_can_be_to_acc(const boost::optional<crypto::view_tag>& view_tag_opt, const crypto::key_derivation& derivation, const size_t output_index)
+  bool out_can_be_to_acc(const boost::optional<crypto::view_tag>& view_tag_opt, const crypto::key_derivation& derivation, const size_t output_index, hw::device* hwdev)
   {
     // If there is no view tag to check, the output can possibly belong to the account.
     // Will need to derive the output pub key to be certain whether or not the output belongs to the account.
@@ -1002,7 +1051,15 @@ namespace cryptonote
     // Therefore can fail out early to avoid expensive crypto ops needlessly deriving output public key to
     // determine if output belongs to the account.
     crypto::view_tag derived_view_tag;
-    crypto::derive_view_tag(derivation, output_index, derived_view_tag);
+    if (hwdev != nullptr)
+    {
+      bool r = hwdev->derive_view_tag(derivation, output_index, derived_view_tag);
+      CHECK_AND_ASSERT_MES(r, false, "Failed to derive view tag");
+    }
+    else
+    {
+      crypto::derive_view_tag(derivation, output_index, derived_view_tag);
+    }
     return view_tag == derived_view_tag;
   }
   //---------------------------------------------------------------
@@ -1012,7 +1069,7 @@ namespace cryptonote
     bool r = acc.get_device().generate_key_derivation(tx_pub_key, acc.m_view_secret_key, derivation);
     CHECK_AND_ASSERT_MES(r, false, "Failed to generate key derivation");
     crypto::public_key pk;
-    if (out_can_be_to_acc(view_tag_opt, derivation, output_index))
+    if (out_can_be_to_acc(view_tag_opt, derivation, output_index, &acc.get_device()))
     {
       r = acc.get_device().derive_public_key(derivation, output_index, acc.m_account_address.m_spend_public_key, pk);
       CHECK_AND_ASSERT_MES(r, false, "Failed to derive public key");
@@ -1026,7 +1083,7 @@ namespace cryptonote
       CHECK_AND_ASSERT_MES(output_index < additional_tx_pub_keys.size(), false, "wrong number of additional tx pubkeys");
       r = acc.get_device().generate_key_derivation(additional_tx_pub_keys[output_index], acc.m_view_secret_key, derivation);
       CHECK_AND_ASSERT_MES(r, false, "Failed to generate key derivation");
-      if (out_can_be_to_acc(view_tag_opt, derivation, output_index))
+      if (out_can_be_to_acc(view_tag_opt, derivation, output_index, &acc.get_device()))
       {
         r = acc.get_device().derive_public_key(derivation, output_index, acc.m_account_address.m_spend_public_key, pk);
         CHECK_AND_ASSERT_MES(r, false, "Failed to derive public key");
@@ -1040,7 +1097,7 @@ namespace cryptonote
   {
     // try the shared tx pubkey
     crypto::public_key subaddress_spendkey;
-    if (out_can_be_to_acc(view_tag_opt, derivation, output_index))
+    if (out_can_be_to_acc(view_tag_opt, derivation, output_index, &hwdev))
     {
       CHECK_AND_ASSERT_MES(hwdev.derive_subaddress_public_key(out_key, derivation, output_index, subaddress_spendkey), boost::none, "Failed to derive subaddress public key");
       auto found = subaddresses.find(subaddress_spendkey);
@@ -1052,7 +1109,7 @@ namespace cryptonote
     if (!additional_derivations.empty())
     {
       CHECK_AND_ASSERT_MES(output_index < additional_derivations.size(), boost::none, "wrong number of additional derivations");
-      if (out_can_be_to_acc(view_tag_opt, additional_derivations[output_index], output_index))
+      if (out_can_be_to_acc(view_tag_opt, additional_derivations[output_index], output_index, &hwdev))
       {
         CHECK_AND_ASSERT_MES(hwdev.derive_subaddress_public_key(out_key, additional_derivations[output_index], output_index, subaddress_spendkey), boost::none, "Failed to derive subaddress public key");
         auto found = subaddresses.find(subaddress_spendkey);
@@ -1128,16 +1185,12 @@ namespace cryptonote
       decimal_point = default_decimal_point;
     switch (decimal_point)
     {
-      case 12:
-        return "monero";
-      case 9:
-        return "millinero";
       case 6:
-        return "micronero";
+        return "xcash";
       case 3:
-        return "nanonero";
+        return "xcash";
       case 0:
-        return "piconero";
+        return "xcash";
       default:
         ASSERT_MES_AND_THROW("Invalid decimal point specification: " << decimal_point);
     }
@@ -1221,7 +1274,7 @@ namespace cryptonote
     char *end = NULL;
     errno = 0;
     const unsigned long long ull = strtoull(buf, &end, 10);
-    CHECK_AND_ASSERT_THROW_MES(ull != ULONG_MAX || errno == 0, "Failed to parse rounded amount: " << buf);
+    CHECK_AND_ASSERT_THROW_MES(ull != ULLONG_MAX || errno == 0, "Failed to parse rounded amount: " << buf);
     CHECK_AND_ASSERT_THROW_MES(ull != 0 || amount == 0, "Overflow in rounding");
     return ull;
   }
@@ -1533,7 +1586,7 @@ namespace cryptonote
   {
     binary_archive<false> ba{epee::strspan<std::uint8_t>(b_blob)};
     bool r = ::serialization::serialize(ba, b);
-    CHECK_AND_ASSERT_MES(r, false, "Failed to parse block from blob");
+    CHECK_AND_ASSERT_MES(r, false, "Failed to parse block from blob...");
     b.invalidate_hashes();
     b.miner_tx.invalidate_hashes();
     if (block_hash)
@@ -1602,9 +1655,14 @@ namespace cryptonote
   //---------------------------------------------------------------
   bool is_valid_decomposed_amount(uint64_t amount)
   {
-    const uint64_t *begin = valid_decomposed_outputs;
-    const uint64_t *end = valid_decomposed_outputs + sizeof(valid_decomposed_outputs) / sizeof(valid_decomposed_outputs[0]);
-    return std::binary_search(begin, end, amount);
+    if (0 == amount)
+      return false;
+
+    // divide out all trailing zeros (in base 10)
+    while (amount % 10 == 0)
+      amount /= 10;
+
+    return amount < 10; // are we left with 1 leading digit?
   }
   //---------------------------------------------------------------
   void get_hash_stats(uint64_t &tx_hashes_calculated, uint64_t &tx_hashes_cached, uint64_t &block_hashes_calculated, uint64_t & block_hashes_cached)

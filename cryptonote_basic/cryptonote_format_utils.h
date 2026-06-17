@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2022, The Monero Project
+// Copyright (c) 2018-2025 XCASH Project, Derived from The Monero Project
 // 
 // All rights reserved.
 // 
@@ -39,6 +39,7 @@
 #include "crypto/hash.h"
 #include <unordered_map>
 #include <boost/multiprecision/cpp_int.hpp>
+#include "common/varint.h"
 
 namespace epee
 {
@@ -83,7 +84,7 @@ namespace cryptonote
   std::vector<crypto::public_key> get_additional_tx_pub_keys_from_extra(const transaction_prefix& tx);
   bool add_additional_tx_pub_keys_to_extra(std::vector<uint8_t>& tx_extra, const std::vector<crypto::public_key>& additional_pub_keys);
   bool add_extra_nonce_to_tx_extra(std::vector<uint8_t>& tx_extra, const blobdata& extra_nonce);
-  bool add_mm_merkle_root_to_tx_extra(std::vector<uint8_t>& tx_extra, const crypto::hash& mm_merkle_root, size_t mm_merkle_tree_depth);
+  bool add_mm_merkle_root_to_tx_extra(std::vector<uint8_t>& tx_extra, const crypto::hash& mm_merkle_root, uint64_t mm_merkle_tree_depth);
   bool remove_field_from_tx_extra(std::vector<uint8_t>& tx_extra, const std::type_info &type);
   void set_payment_id_to_tx_extra_nonce(blobdata& extra_nonce, const crypto::hash& payment_id);
   void set_encrypted_payment_id_to_tx_extra_nonce(blobdata& extra_nonce, const crypto::hash8& payment_id);
@@ -91,7 +92,7 @@ namespace cryptonote
   bool get_encrypted_payment_id_from_tx_extra_nonce(const blobdata& extra_nonce, crypto::hash8& payment_id);
   void set_tx_out(const uint64_t amount, const crypto::public_key& output_public_key, const bool use_view_tags, const crypto::view_tag& view_tag, tx_out& out);
   bool check_output_types(const transaction& tx, const uint8_t hf_version);
-  bool out_can_be_to_acc(const boost::optional<crypto::view_tag>& view_tag_opt, const crypto::key_derivation& derivation, const size_t output_index);
+  bool out_can_be_to_acc(const boost::optional<crypto::view_tag>& view_tag_opt, const crypto::key_derivation& derivation, const size_t output_index, hw::device *hwdev = nullptr);
   bool is_out_to_acc(const account_keys& acc, const crypto::public_key& output_public_key, const crypto::public_key& tx_pub_key, const std::vector<crypto::public_key>& additional_tx_public_keys, size_t output_index, const boost::optional<crypto::view_tag>& view_tag_opt = boost::optional<crypto::view_tag>());
   struct subaddress_receive_info
   {
@@ -137,6 +138,7 @@ namespace cryptonote
   uint64_t get_transaction_weight(const transaction &tx);
   uint64_t get_transaction_weight(const transaction &tx, size_t blob_size);
   uint64_t get_pruned_transaction_weight(const transaction &tx);
+  uint64_t get_transaction_blob_size(const transaction& tx);
 
   bool check_money_overflow(const transaction& tx);
   bool check_outs_overflow(const transaction& tx);
